@@ -9,24 +9,29 @@ int main()
     const int size = arr.size();
 
     std::cout << "Choose your function sort: \n";
-    for (int i = 0; i < menu.size(); i++)
+    for (unsigned int i = 0; i < menu.size(); i++)
     {
         std::cout << "\n"
                   << i + 1 << "). " << menu[i];
     }
 
     int chose;
-    std::cout << std::endl << std::endl << "Enter your chose: ";
+    std::cout << std::endl
+              << std::endl
+              << "Enter your chose: ";
     std::cin >> chose;
 
-    std::cout << "A, array Before sorting: \n";
+    std::cout << "------" << menu[chose - 1] << "------" << std::endl
+              << "A, array Before sorting: \n";
     print(arr, arr.size());
 
-    auto sortFunc = menuFunctions[chose];
+    auto sortFunc = menuFunctions[chose - 1];
     sortFunc(arr, size);
 
     std::cout << "A, array After sorting: \n";
     print(arr, arr.size());
+    std::cout << std::endl
+              << std::endl;
 
     return 0;
 }
