@@ -5,17 +5,17 @@ int main()
     while (true)
     {
         std::vector<int> arr = mainArr;
-        std::cout<<"  ---------------  Sorting Algorithms --------------- \n";
+        std::cout << "  ---------------  Sorting Algorithms ---------------  ";
 
         unsigned int i = 0;
         for (; i < menu.size(); i++)
         {
             std::cout << "\n   "
-            << i + 1 << "). " << menu[i];
+                      << i + 1 << "). " << menu[i];
         }
         std::cout << "\n   "
-        << i + 1 << "). " << "Exit.";
-        
+                  << i + 1 << "). " << "Exit.";
+
         int chose;
         std::cout << "\n  --- Choose your function sort: ";
         std::cin >> chose;
@@ -32,6 +32,7 @@ int main()
         std::cout << "   After sorting: \n     ";
         print(arr, arr.size());
         std::cout
+            << std::endl
             << std::endl;
     }
 
