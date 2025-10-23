@@ -1,9 +1,11 @@
 #include <vector>
-/*delete this*/#include <iostream>
+#include "swap.hpp"
 
-bool selectionSort(std::vector<int> &arr, int size)
+bool selectionSort(std::vector<int> &arr)
 {
-    /*delete this*/std::cout << "selection sort\n\n";
+    int size = arr.size();
+    if (size <= 0) return false;
+    
     int minIndex = 0;
 
     for (int i = 0; i < size-1; i++)
@@ -15,9 +17,7 @@ bool selectionSort(std::vector<int> &arr, int size)
                 minIndex = j;
             }
         }
-        int temp = arr[i];
-        arr[i] = arr[minIndex];
-        arr[minIndex] = temp;
+        swap(arr[i], arr[minIndex]);
     }
 
     return true;

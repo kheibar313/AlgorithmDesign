@@ -1,18 +1,19 @@
 #include <vector>
-/*delete this*/#include <iostream>
+#include "swap.hpp"
 
-bool bubbleSort(std::vector<int> &arr, int size)
+bool bubbleSort(std::vector<int> &arr)
 {
-    /*delete this*/std::cout << "bubbleSort\n\n";
+    int size = arr.size();
+    if (size <= 0)
+        return false;
+
     for (int i = 0; i < size - 1; i++)
     {
         for (int j = 0; j < size - i - 1; j++)
         {
             if (arr[j] > arr[j + 1])
             {
-                int temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
+                swap(arr[j], arr[j + 1]);
             }
         }
     }

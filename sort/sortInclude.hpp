@@ -1,13 +1,11 @@
-#ifndef SORTFILES_HPP
-#define SORTFILES_HPP
+#ifndef SORTINCLUDE_HPP
+#define SORTINCLUDE_HPP
 
-// ALL .hpp :
-#include "print.hpp"
-
-// All .cpp :
 #include "bubbleSort.cpp"
 #include "selectionSort.cpp"
 #include "insertionSort.cpp"
 #include "mergeSort.cpp"
+#include "quickSort.cpp"
+#include "heapSort.cpp"
 
 #endif

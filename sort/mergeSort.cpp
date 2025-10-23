@@ -1,19 +1,24 @@
 #include <vector>
-//delete this
-#include <iostream>
 
-bool realMergeSort(std::vector<int> &, int, int);
-bool merge(std::vector<int> &, int, int, int);
+bool merge(std::vector<int> &arr, int low, int mid, int high) {
+    std::vector<int> temp;
+    int left = low, right = mid + 1;
+    
+    while (left <= mid && right <= high) {
+        if (arr[left] <= arr[right]) {
+            temp.push_back(arr[left++]);
+        } else {
+            temp.push_back(arr[right++]);
+        }
+    }
 
-bool mergeSort(std::vector<int> &arr, int size)
-{
-    //delete this
-    std::cout << "mergeSort\n\n";
-
-    if (size <= 0) return false;
-
-    realMergeSort(arr, 0, size - 1);
-
+    while (left <= mid) temp.push_back(arr[left++]);
+    while (right <= high) temp.push_back(arr[right++]);
+    
+    for (long long unsigned int i = 0; i < temp.size(); i++) {
+        arr[low + i] = temp[i];
+    }
+    
     return true;
 }
 
@@ -31,24 +36,12 @@ bool realMergeSort(std::vector<int> &arr, int low, int high)
     return true;
 }
 
-bool merge(std::vector<int> &arr, int low, int mid, int high) {
-    std::vector<int> temp;
-    int left = low, right = mid + 1;
-    
-    while (left <= mid && right <= high) {
-        if (arr[left] <= arr[right]) {
-            temp.push_back(arr[left++]);
-        } else {
-            temp.push_back(arr[right++]);
-        }
-    }
+bool mergeSort(std::vector<int> &arr)
+{
+    int size = arr.size();
+    if (size <= 0) return false;
 
-    while (left <= mid) temp.push_back(arr[left++]);
-    while (right <= high) temp.push_back(arr[right++]);
-    
-    for (int i = 0; i < temp.size(); i++) {
-        arr[low + i] = temp[i];
-    }
-    
+    realMergeSort(arr, 0, size - 1);
+
     return true;
 }

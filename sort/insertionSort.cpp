@@ -1,9 +1,10 @@
 #include <vector>
-/*delete this*/#include <iostream>
 
-bool insertionSort(std::vector<int>& arr, int size)
+bool insertionSort(std::vector<int>& arr)
 {
-    /*delete this*/std::cout << "insertion sort\n\n";
+    int size = arr.size();
+    if (size <= 0) return false;
+
     for (int i = 1; i < size; i++)
     {
         int now = arr[i];
