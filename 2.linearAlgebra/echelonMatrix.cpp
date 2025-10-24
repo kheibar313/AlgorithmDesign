@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 using type = double;
 std::vector<std::vector<type>> mainMatrix;
@@ -9,100 +10,89 @@ namespace SI4
     using namespace std;
     using type = double;
 
-    vector<int> input(vector<vector<type>> &matrix)
+    vector<int> readMatrix(vector<vector<type>> &matrix)
     {
-        int m, n;
-        cout << "\nMatrix m * n\nEnter m: ";
-        cin >> m;
-        cout << "Enter n: ";
-        cin >> n;
+        int rows, cols;
+        cout << "\nMatrix size (rows × cols)\nEnter rows: ";
+        cin >> rows;
+        cout << "Enter cols: ";
+        cin >> cols;
 
         matrix.clear();
-        vector<int> dims = {m, n};
+        matrix.resize(rows, vector<type>(cols));
 
         cout << "\nEnter matrix elements row by row:\n";
-        for (int i = 0; i < m; i++)
-        {
-            vector<type> row;
-            for (int j = 0; j < n; j++)
-            {
-                type inp;
-                cin >> inp;
-                row.push_back(inp);
-            }
-            matrix.push_back(row);
-        }
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
+                cin >> matrix[i][j];
 
-        return dims;
+        return {rows, cols};
     }
 
-    void print(vector<vector<type>> &matrix, vector<int> size)
+    void printMatrix(const vector<vector<type>> &matrix, const vector<int> &size)
     {
-        int m = size[0], n = size[1];
-        for (int i = 0; i < m; i++)
+        int rows = size[0], cols = size[1];
+        for (int i = 0; i < rows; i++)
         {
-            for (int j = 0; j < n; j++)
+            for (int j = 0; j < cols; j++)
                 cout << matrix[i][j] << "\t";
-            cout << endl;
+            cout << '\n';
         }
     }
 
-    void replace(vector<vector<type>> &matrix, int row1, int row2)
+    void swapRows(vector<vector<type>> &matrix, int r1, int r2)
     {
-        if (row1 != row2)
-            swap(matrix[row1], matrix[row2]);
+        if (r1 != r2 && r1<matrix.size() && r2<matrix.size())
+            swap(matrix[r1], matrix[r2]);
     }
 
-    bool makePivot(vector<vector<type>> &matrix, int numberRow, int rowLeading, int col)
+    bool normalizePivotRow(vector<vector<type>> &matrix, int pivotRow, int pivotCol)
     {
-        if (numberRow >= matrix.size() || matrix[numberRow].size() < 1)
-            return false;
-
-        replace(matrix, numberRow, rowLeading);
-
-        type pivot = matrix[rowLeading][col];
+        type pivot = matrix[pivotRow][pivotCol];
         if (pivot == 0)
             return false;
 
-        for (int i = 0; i < matrix[rowLeading].size(); i++)
-            matrix[rowLeading][i] /= pivot;
+        for (auto &val : matrix[pivotRow])
+            val /= pivot;
 
         return true;
     }
 
-    void eliminateBelow(vector<vector<type>> &matrix, int rowLeading, int col, int m, int n)
+    void eliminateLowerRows(vector<vector<type>> &matrix, int pivotRow, int pivotCol, int rows, int cols)
     {
-        for (int i = rowLeading + 1; i < m; i++)
+        for (int i = pivotRow + 1; i < rows; i++)
         {
-            type factor = matrix[i][col];
-            for (int j = col; j < n; j++)
-                matrix[i][j] -= factor * matrix[rowLeading][j];
+            type factor = matrix[i][pivotCol];
+            for (int j = pivotCol; j < cols; j++)
+                matrix[i][j] -= factor * matrix[pivotRow][j];
         }
     }
 
-    bool echelonMatrix(vector<vector<type>> &matrix, vector<int> size)
+    bool toEchelonForm(vector<vector<type>> &matrix, const vector<int> &size)
     {
-        int m = size[0], n = size[1];
-        int rowLeading = 0;
+        int rows = size[0], cols = size[1];
+        int pivotRow = 0;
 
-        for (int col = 0; col < n && rowLeading < m; col++)
+        for (int pivotCol = 0; pivotCol < cols && pivotRow < rows; pivotCol++)
         {
-            int pivotRow = -1;
-            for (int i = rowLeading; i < m; i++)
+            int nonZeroRow = -1;
+            for (int i = pivotRow; i < rows; i++)
             {
-                if (matrix[i][col] != 0)
+                if (fabs(matrix[i][pivotCol]) > 1e-9)
                 {
-                    pivotRow = i;
+                    nonZeroRow = i;
                     break;
                 }
             }
-            if (pivotRow == -1)
+
+            if (nonZeroRow == -1)
                 continue;
 
-            makePivot(matrix, pivotRow, rowLeading, col);
-            eliminateBelow(matrix, rowLeading, col, m, n);
+            swapRows(matrix, pivotRow, nonZeroRow);
+            normalizePivotRow(matrix, pivotRow, pivotCol);
+            eliminateLowerRows(matrix, pivotRow, pivotCol, rows, cols);
 
-            rowLeading++;
+            pivotRow++;
         }
         return true;
     }
@@ -110,15 +100,15 @@ namespace SI4
 
 int main()
 {
-    std::vector<int> size = SI4::input(mainMatrix);
+    auto size = SI4::readMatrix(mainMatrix);
 
     std::cout << "\nOriginal Matrix:\n";
-    SI4::print(mainMatrix, size);
+    SI4::printMatrix(mainMatrix, size);
 
-    SI4::echelonMatrix(mainMatrix, size);
+    SI4::toEchelonForm(mainMatrix, size);
 
     std::cout << "\nEchelon Form:\n";
-    SI4::print(mainMatrix, size);
+    SI4::printMatrix(mainMatrix, size);
 
     return 0;
 }
