@@ -17,7 +17,7 @@ namespace SI4
     vector<int> readMatrix(vector<vector<type>> &matrix)
     {
         int rows, cols;
-        cout << "\nMatrix size (rows × cols)\nEnter rows: ";
+        cout << "\nMatrix size (rows x cols)\nEnter rows: ";
         cin >> rows;
         cout << "Enter cols: ";
         cin >> cols;
