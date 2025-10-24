@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <iomanip>
 
 using type = double;
 std::vector<std::vector<type>> mainMatrix;
@@ -9,6 +10,9 @@ namespace SI4
 {
     using namespace std;
     using type = double;
+    constexpr type EPS = 1e-9;
+
+    inline bool isZero(type x) { return fabs(x) < EPS; }
 
     vector<int> readMatrix(vector<vector<type>> &matrix)
     {
@@ -18,9 +22,7 @@ namespace SI4
         cout << "Enter cols: ";
         cin >> cols;
 
-        matrix.clear();
-        matrix.resize(rows, vector<type>(cols));
-
+        matrix.assign(rows, vector<type>(cols));
         cout << "\nEnter matrix elements row by row:\n";
         for (int i = 0; i < rows; i++)
             for (int j = 0; j < cols; j++)
@@ -32,10 +34,11 @@ namespace SI4
     void printMatrix(const vector<vector<type>> &matrix, const vector<int> &size)
     {
         int rows = size[0], cols = size[1];
+        cout << fixed << setprecision(3);
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
-                cout << matrix[i][j] << "\t";
+                cout << setw(10) << matrix[i][j];
             cout << '\n';
         }
     }
@@ -49,7 +52,7 @@ namespace SI4
     bool normalizePivotRow(vector<vector<type>> &matrix, int pivotRow, int pivotCol)
     {
         type pivot = matrix[pivotRow][pivotCol];
-        if (pivot == 0)
+        if (isZero(pivot))
             return false;
 
         for (auto &val : matrix[pivotRow])
@@ -78,7 +81,7 @@ namespace SI4
             int nonZeroRow = -1;
             for (int i = pivotRow; i < rows; i++)
             {
-                if (fabs(matrix[i][pivotCol]) > 1e-9)
+                if (!isZero(matrix[i][pivotCol]))
                 {
                     nonZeroRow = i;
                     break;
