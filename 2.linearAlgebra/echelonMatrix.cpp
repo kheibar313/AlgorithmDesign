@@ -1,58 +1,29 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include <iomanip>
+#include "read_printMatrix.hpp"
+#include "si4Float.hpp"
 
-using type = double;
+using type = si4Float;
 std::vector<std::vector<type>> mainMatrix;
 
 namespace SI4
 {
     using namespace std;
-    using type = double;
-    constexpr type EPS = 1e-9;
+    using type = si4Float;
+    constexpr long double EPS = 1e-9;
 
-    inline bool isZero(type x) { return fabs(x) < EPS; }
-
-    vector<int> readMatrix(vector<vector<type>> &matrix)
+    void swapRows(vector<vector<type>> &matrix, unsigned r1, unsigned r2)
     {
-        int rows, cols;
-        cout << "\nMatrix size (rows x cols)\nEnter rows: ";
-        cin >> rows;
-        cout << "Enter cols: ";
-        cin >> cols;
-
-        matrix.assign(rows, vector<type>(cols));
-        cout << "\nEnter matrix elements row by row:\n";
-        for (int i = 0; i < rows; i++)
-            for (int j = 0; j < cols; j++)
-                cin >> matrix[i][j];
-
-        return {rows, cols};
-    }
-
-    void printMatrix(const vector<vector<type>> &matrix, const vector<int> &size)
-    {
-        int rows = size[0], cols = size[1];
-        cout << fixed << setprecision(3);
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < cols; j++)
-                cout << setw(10) << matrix[i][j];
-            cout << '\n';
-        }
-    }
-
-    void swapRows(vector<vector<type>> &matrix, int r1, int r2)
-    {
-        if (r1 != r2 && r1<matrix.size() && r2<matrix.size())
+        if (r1 != r2 && r1 < matrix.size() && r2 < matrix.size())
             swap(matrix[r1], matrix[r2]);
     }
 
     bool normalizePivotRow(vector<vector<type>> &matrix, int pivotRow, int pivotCol)
     {
         type pivot = matrix[pivotRow][pivotCol];
-        if (isZero(pivot))
+
+        if (pivot.returnNumerator() == 0)
             return false;
 
         for (auto &val : matrix[pivotRow])
@@ -71,17 +42,18 @@ namespace SI4
         }
     }
 
-    bool toEchelonForm(vector<vector<type>> &matrix, const vector<int> &size)
+    bool toEchelonForm(vector<vector<type>> &matrix, std::pair<int, int> &size)
     {
-        int rows = size[0], cols = size[1];
-        int pivotRow = 0;
+        unsigned rows = size.first, cols = size.second;
+        unsigned pivotRow = 0;
 
-        for (int pivotCol = 0; pivotCol < cols && pivotRow < rows; pivotCol++)
+        for (unsigned pivotCol = 0; pivotCol < cols && pivotRow < rows; pivotCol++)
         {
             int nonZeroRow = -1;
-            for (int i = pivotRow; i < rows; i++)
+            for (unsigned i = pivotRow; i < rows; i++)
             {
-                if (!isZero(matrix[i][pivotCol]))
+                // if (!isZero(matrix[i][pivotCol]))
+                if (matrix[i][pivotCol].returnNumerator() != 0)
                 {
                     nonZeroRow = i;
                     break;
@@ -103,15 +75,15 @@ namespace SI4
 
 int main()
 {
-    auto size = SI4::readMatrix(mainMatrix);
+    auto size = readMatrix<type>(mainMatrix);
 
     std::cout << "\nOriginal Matrix:\n";
-    SI4::printMatrix(mainMatrix, size);
+    printMatrix<type>(mainMatrix, size);
 
     SI4::toEchelonForm(mainMatrix, size);
 
     std::cout << "\nEchelon Form:\n";
-    SI4::printMatrix(mainMatrix, size);
+    printMatrix<type>(mainMatrix, size);
 
     return 0;
 }
