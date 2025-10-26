@@ -1,8 +1,8 @@
-#include <vector>
-#include <iostream>
-
 #ifndef PRINT_HPP
 #define PRINT_HPP
+
+#include <vector>
+#include <iostream>
 
 bool print(std::vector<int> arr, int size)
 {
