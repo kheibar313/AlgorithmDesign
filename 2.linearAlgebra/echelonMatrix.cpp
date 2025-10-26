@@ -52,7 +52,6 @@ namespace SI4
             int nonZeroRow = -1;
             for (unsigned i = pivotRow; i < rows; i++)
             {
-                // if (!isZero(matrix[i][pivotCol]))
                 if (matrix[i][pivotCol].returnNumerator() != 0)
                 {
                     nonZeroRow = i;
