@@ -12,9 +12,9 @@ void clearScreen()
 #endif
 }
 
-void eXit()
+/*void eXit()
 {
     exit(0);
-}
+}*/
 
 #endif
