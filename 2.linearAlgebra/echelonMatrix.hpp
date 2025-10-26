@@ -1,3 +1,6 @@
+#ifndef ECHELONMATRIX_HPP
+#define ECHELONMATRIX_HPP
+
 #include <vector>
 #include "si4Float.hpp"
 
@@ -69,3 +72,4 @@ namespace SI4
     }
 }
 
+#endif
