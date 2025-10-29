@@ -10,7 +10,7 @@ int main()
 
     while (true)
     {
-
+        
         unsigned int i = 0;
         for (; i < menu.size(); i++)
         {
@@ -21,9 +21,11 @@ int main()
                   << i + 1 << "). " << "Exit.";
         std::cout << "\n --- Enter your chose: ";
         std::cin >> choose;
-
         if (choose >= i + 1)
             return 0;
+        
+
+        //choose = 2;
 
         auto func = outputs[choose - 1];
         std::cout << std::endl;

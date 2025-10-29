@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <numeric>
-#include <stdexcept>
 
 class si4Float
 {
@@ -39,7 +38,7 @@ public:
     }
 
     si4Float(int n) : _numerator(n), _denominator(1) {}
-    
+
     template <typename T, typename = std::enable_if_t<std::is_floating_point_v<T>>>
     si4Float(T val)
     {
@@ -48,7 +47,7 @@ public:
         _denominator = scale;
         simplify();
     }
-    
+
     long long returnNumerator() const { return _numerator; }
     long long returnDenominator() const { return _denominator; }
     long double returnVal() const
