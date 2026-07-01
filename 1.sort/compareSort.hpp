@@ -46,7 +46,7 @@ int mainCompareSort(std::vector<bool (*)(std::vector<int> &)> &algorithms, long 
             intDelay += std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
         }
 
-        delay[sortFunctionIndex[sFIndex]] = intDelay;
+        delay[sortFunctionIndex[sFIndex]] += intDelay;
         sortFunctionIndex.erase(sortFunctionIndex.begin() + sFIndex);
     }
 
@@ -54,7 +54,11 @@ int mainCompareSort(std::vector<bool (*)(std::vector<int> &)> &algorithms, long 
 }
 
 int compareSort()
-{
+{   
+    int n = 1;
+    std::cout << "Number of repet: ";
+    std::cin >> n;
+
     long long delay[6] = {0};
     unsigned start = 50, end = 100;
     std::cout << "Enter start: ";
@@ -62,15 +66,18 @@ int compareSort()
 
     std::cout << "Enter end: ";
     std::cin >> end;
-
-    mainCompareSort(Sort::menuFunctions, delay, start, end);
-
+    
+    while (n > 0)
+    {
+        mainCompareSort(Sort::menuFunctions, delay, start, end);
+        --n;
+    }
+    
     auto algorithmName = Sort::menu;
-
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < Sort::menuFunctions.size()-1; i++)
     {
         unsigned int minIndex = i;
-        for (int j = i + 1; j < 6; j++)
+        for (int j = i + 1; j < Sort::menuFunctions.size(); j++)
         {
             if (delay[minIndex] > delay[j])
             {

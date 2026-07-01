@@ -61,6 +61,13 @@
         "stop_token": "cpp",
         "thread": "cpp",
         "algorithm": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "array": "cpp",
+        "filesystem": "cpp",
+        "fstream": "cpp",
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "variant": "cpp",
+        "xhash": "cpp"
     }
 }

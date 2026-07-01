@@ -1,0 +1,19 @@
+class Node
+{
+private:
+    int data = 0;
+    std::vector<std::unique_ptr<Node>> childs;
+
+public:
+    Node(int _data) : data(_data) {}
+    Node(int _data, std::vector<std::unique_ptr<Node>> &&_childs)
+        : data(_data), childs(std::move(_childs)) {}
+
+    static std::unique_ptr<Node> makeWithOs()
+    {
+        std::cout << "data Node: ";
+        int dt;
+        std::cin >> dt;
+        return std::make_unique<Node>(dt);
+    }
+};

@@ -14,7 +14,7 @@ There are number of folders that Each of which is related to a part of the lesso
 
 2. Linear Algebra:
     2.1. REF(Row echelon form)
-    2.2. RREF(Reduce REF)
+    2.2. RREF(Reduced REF)
     2.3. Inverse Matrix
     2.4. Invertible Matrix
 

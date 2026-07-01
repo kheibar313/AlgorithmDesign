@@ -11,12 +11,10 @@ int main()
 
     while (true)
     {
-
         unsigned int i = 0;
         for (; i < menu.size(); i++)
         {
-            std::cout << "\n   "
-                      << i + 1 << "). " << menu[i];
+            std::cout   << "\n   " << i + 1 << "). " << menu[i];
         }
         std::cout << "\n   "
                   << i + 1 << "). " << "Exit.";
@@ -26,12 +24,20 @@ int main()
             return 0;
 
         // choose = 2;
-
         auto func = outputs[choose - 1];
         std::cout << std::endl;
 
         func();
     }
+
+    /*
+    while (true)
+    {
+        auto func = outputs[1];
+        std::cout << std::endl;
+        func();
+    }
+    */
 
     return true;
 }

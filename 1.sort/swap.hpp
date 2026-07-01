@@ -1,9 +1,10 @@
 #ifndef SWAP_HPP
 #define SWAP_HPP
 
-bool swap(int &a, int &b)
+template <typename T>
+bool swap(T &a, T &b)
 {
-    int temp = a;
+    T temp = a;
     a = b;
     b = temp;
 

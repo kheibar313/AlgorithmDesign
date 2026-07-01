@@ -25,3 +25,5 @@ bool bubbleSort(std::vector<int> &arr)
 }
 
 #endif
+
+// g++ main.cpp -IC:C:/More/myCode/SFML-3.0.2/include -LC:C:/More/myCode/SFML-3.0.2/lib -lsfml-graphics -lsfml-window -lsfml-system -o main.exe
